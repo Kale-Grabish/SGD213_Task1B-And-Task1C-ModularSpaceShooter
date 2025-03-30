@@ -19,6 +19,7 @@ public class PlayerMovementScript : MonoBehaviour
         OURRigidbody = GetComponent<Rigidbody2D>();
     }
 
+    //allows the player to move the player character with the keyboard
     public void HorizontalMovement(float HorizontalInput)
     {
         Vector2 ForceToAdd = Vector2.right * HorizontalInput * speed * Time.deltaTime;
