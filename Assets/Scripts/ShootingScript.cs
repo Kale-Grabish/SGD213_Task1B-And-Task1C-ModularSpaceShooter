@@ -37,6 +37,14 @@ public class ShootingScript : MonoBehaviour
         }
     }
 
+    void Update()
+    {
+        if (Input.GetButtonDown("Fire1")) // Usually left mouse button or spacebar
+        {
+            Shoot();
+        }
+    }
+
     /// <summary>
     /// SampleMethod is a sample of how to use abstraction by
     /// specification. It converts a provided integer to a float.
