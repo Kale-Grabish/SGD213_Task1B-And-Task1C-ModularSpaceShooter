@@ -16,10 +16,7 @@ public class AIMoveAndShoot : MonoBehaviour {
         enemyMovement = GetComponent<EnemyMovement>();
         weapon = GetComponent<WeaponBase>();
 
-        // get a random direction between South-East and South-West
-        float x = Random.Range(-0.5f, 0.5f);
-        float y = -0.15f;
-        movementDirection = new Vector2(x, y).normalized; // ensure it is normalised
+        InvokeRepeating("MoveEnemy", 0, 1);
     }
 
     // Update is called once per frame
@@ -33,5 +30,15 @@ public class AIMoveAndShoot : MonoBehaviour {
         if (weapon != null) {
             weapon.Shoot();
         }
+
+
+    }
+
+    void MoveEnemy()
+    {
+        // get a random direction between South-East and South-West
+        float x = Random.Range(-400f, 400f);
+        float y = -0.50f;
+        movementDirection = new Vector2(x, y).normalized; // ensure it is normalised
     }
 }
