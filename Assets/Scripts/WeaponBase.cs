@@ -42,7 +42,13 @@ public abstract class WeaponBase : MonoBehaviour
     /// <param name="oldWeapon">The existing weapon that will be used to grab WeaponBase controls from</param>
     public virtual void UpdateWeaponControls(WeaponBase oldWeapon)
     {
-        // update the data of the new weapon with the data from this weapon
+        // Check for null references and log warnings
+        if (!oldWeapon.BulletSpawnPoint)
+            Debug.LogWarning("Bullet spawn point is null!");
+
+        if (!oldWeapon.Bullet)
+            Debug.LogWarning("Bullet prefab is null!");
+
         bulletSpawnPoint = oldWeapon.BulletSpawnPoint;
         bullet = oldWeapon.Bullet;
     }

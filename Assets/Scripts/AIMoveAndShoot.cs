@@ -38,7 +38,7 @@ public class AIMoveAndShoot : MonoBehaviour {
     {
         // get a random direction between South-East and South-West
         float x = Random.Range(-400f, 400f);
-        float y = -0.50f;
+        float y = -6f;
         movementDirection = new Vector2(x, y).normalized; // ensure it is normalised
     }
 }
