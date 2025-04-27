@@ -2,28 +2,48 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WeaponTripleShot : WeaponBase {
+public class WeaponTripleShot : WeaponBase
+{
+    private MoveConstantly[] bulletComponents;
 
-    /// <summary>
-    /// Shoot will spawn a three bullets, provided enough time has passed compared to our fireDelay.
-    /// </summary>
-    public override void Shoot() {
-        // get the current time
+    public override void Shoot()
+    {
         float currentTime = Time.time;
 
-        print("Shoot triple shot");
-        // if enough time has passed since our last shot compared to our fireDelay, spawn our bullet
-        if (currentTime - lastFiredTime > fireDelay) {
-            float x = -0.5f;
-            // create 3 bullets
-            for (int i = 0; i < 3; i++) {
-                // create our bullet
-                GameObject newBullet = Instantiate(bullet, bulletSpawnPoint.position, transform.rotation);
-                // set their direction
-                newBullet.GetComponent<MoveConstantly>().Direction = new Vector2(x + 0.5f * i, 0.5f);
+        if (currentTime - lastFiredTime > fireDelay)
+        {
+            // Initialize cached components array if needed
+            if (bulletComponents == null || bulletComponents.Length != 3)
+            {
+                bulletComponents = new MoveConstantly[3];
             }
 
-            // update our shooting state
+            float x = -0.5f;
+            for (int i = 0; i < 3; i++)
+            {
+                GameObject newBullet = Instantiate(bullet, bulletSpawnPoint.position, transform.rotation);
+
+                // Get or add the component safely
+                if (!newBullet.TryGetComponent<MoveConstantly>(out MoveConstantly move))
+                {
+                    move = newBullet.AddComponent<MoveConstantly>();
+                }
+
+                // Store for reuse
+                bulletComponents[i] = move;
+
+                // Set direction with validation
+                Vector2 direction = new Vector2(x + 0.5f * i, 0.5f);
+                if (move != null)
+                {
+                    move.Direction = direction;
+                }
+                else
+                {
+                    Debug.LogError($"Failed to initialize MoveConstantly component on bullet {i}");
+                }
+            }
+
             lastFiredTime = currentTime;
         }
     }

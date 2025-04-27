@@ -8,12 +8,12 @@ public class AIMoveAndShoot : MonoBehaviour {
     private Vector2 movementDirection;
 
     // local references
-    private EnemyMovement enemyMovement;
+    private EngineBase engineBase;
     private WeaponBase weapon;
 
     void Start() {
         // populate our local references
-        enemyMovement = GetComponent<EnemyMovement>();
+        engineBase = GetComponent<EngineBase>();
         weapon = GetComponent<WeaponBase>();
 
         InvokeRepeating("MoveEnemy", 0, 1);
@@ -22,8 +22,8 @@ public class AIMoveAndShoot : MonoBehaviour {
     // Update is called once per frame
     void Update () {
         // move our enemy if we have a EnemyMovement component attached
-        if (enemyMovement != null) {
-            enemyMovement.MoveEnemy(movementDirection);
+        if (engineBase != null) {
+            engineBase.MovePlayer(movementDirection);
         }
 
         // shoot if we have a IWeapon component attached
